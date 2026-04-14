@@ -1,0 +1,840 @@
+{
+  "name": "sqlrag",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "tesq",
+          "mode": "list",
+          "cachedResultName": "tesq"
+        },
+        "options": {
+          "pineconeNamespace": ""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        -800
+      ],
+      "id": "02adfd0d-418e-46d5-bf28-61d43074f731",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "j9c9B88ORX3IEfhO",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-embedding-001"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        96,
+        -576
+      ],
+      "id": "db779925-8894-4a46-be83-ffb34c1b9c58",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qE4A7uUJjqjep7Bc",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "=post",
+                "value": "={{ $json.post_content }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        256,
+        -576
+      ],
+      "id": "72ee2d73-0d43-4cef-821e-f0a3fad3b00d",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "أنت المسرول عن قاعدة البيانات وترحب باي شخص بناء على هذا لديك العديد من الداتا القادمة من قاعدة البيانات ونريد ان نستفسر عنها اذا سألك احد عن مثلا هل يوجد لديك في البيانات القطاع الزراعي اخبره نعم واحضر له بوست كمثال على البيانات الموجودة لديك واذا سالك احد عن شيء غير موجود في الداتا اخبره انك لا تعلم بامكانك التواصل مع الادمن او المدير وهو يوجهك \nلا تجاوب ابدا خارج حدود الداتا الموجودة لديك فقط الاجابة تكون بقدر الداتا الموجودة لديك\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        816,
+        -1184
+      ],
+      "id": "630c6777-b907-4bf9-a82b-bc19b24b2723",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        544,
+        -880
+      ],
+      "id": "c84c7267-c88d-4a91-ba2b-4ddafc4d01cf",
+      "name": "When chat message received",
+      "webhookId": "2d61a36b-a967-49dd-90e6-7833cf794d49"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        -960
+      ],
+      "id": "f9dbb054-7d90-4d72-9b8a-c84fad04f876",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "description": "لديك مجموعة من البيانات الغير مرتبة مدئيا واريدك ان تجاوب فقط بحدود هذه الداتا واذا سالك المستخدم عن أي بيانات أخرى أخبره انك لا تعلم وانه بامكانه التواصل مع الأدمن أو المدير"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        1024,
+        -960
+      ],
+      "id": "83b32993-32a9-40d1-84cd-58cf5939483d",
+      "name": "Answer questions with a vector store"
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "tesq",
+          "mode": "list",
+          "cachedResultName": "tesq"
+        },
+        "options": {
+          "pineconeNamespace": "res"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        912,
+        -752
+      ],
+      "id": "d4083960-303b-405c-b7f9-8e2d0d35ce60",
+      "name": "Pinecone Vector Store1",
+      "credentials": {
+        "pineconeApi": {
+          "id": "j9c9B88ORX3IEfhO",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-embedding-001"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        992,
+        -544
+      ],
+      "id": "7902609c-7083-411f-8a28-730c08b7ba7f",
+      "name": "Embeddings Google Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qE4A7uUJjqjep7Bc",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SHOW TABLES;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -1904,
+        -944
+      ],
+      "id": "7e2e21db-02a7-4a8b-8f5f-6cea6a26d156",
+      "name": "Execute a SQL query",
+      "executeOnce": false,
+      "credentials": {
+        "mySql": {
+          "id": "4xOQGL6VrSWyP9YZ",
+          "name": "MySQL account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "wp_posts",
+          "mode": "name"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -1440,
+        -1040
+      ],
+      "id": "b288688e-2127-4929-b276-c1b73e9f48fc",
+      "name": "Select rows from a table1",
+      "executeOnce": true,
+      "credentials": {
+        "mySql": {
+          "id": "4xOQGL6VrSWyP9YZ",
+          "name": "MySQL account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.filter(item => {\n  return (\n    item.json.post_type === \"post\" && // فقط البوستات\n    item.json.post_content // يجب أن يحتوي على محتوى\n  );\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1008,
+        -1040
+      ],
+      "id": "4a3856d6-34a3-4881-b0ea-f413042cc282",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "model": "inception/mercury-coder",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        768,
+        -960
+      ],
+      "id": "03c1f7d2-af5b-47e8-aed1-23b7e57daa67",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "OnXtLDIZUhz7K2Ff",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "arcee-ai/trinity-mini:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -752
+      ],
+      "id": "b6362067-7697-4a6e-bb21-b195f2d1b319",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "OnXtLDIZUhz7K2Ff",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "18J7JeKBjHUI7aOKpkm1FytJS8kL4iV1WAc9BQIdeJFo",
+          "mode": "list",
+          "cachedResultName": "testsq",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18J7JeKBjHUI7aOKpkm1FytJS8kL4iV1WAc9BQIdeJFo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "الورقة1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18J7JeKBjHUI7aOKpkm1FytJS8kL4iV1WAc9BQIdeJFo/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1312,
+        -784
+      ],
+      "id": "f8adfee5-2ac0-468b-9900-85bd91cd4eae",
+      "name": "Get row(s) in sheet",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "mECpVv88e9yzXODS",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6a68f27-b327-4772-bfb2-ee2148190bcd",
+              "name": "post_content",
+              "value": "={{ $json.post_content }}",
+              "type": "string"
+            },
+            {
+              "id": "358bdba5-16c9-4ee7-9318-5fd09b98cd14",
+              "name": "post_date",
+              "value": "={{ $json.post_date }}",
+              "type": "string"
+            },
+            {
+              "id": "676b321b-67f9-493b-ad1e-c62545e074cf",
+              "name": "ID",
+              "value": "={{ $json.ID }}",
+              "type": "number"
+            },
+            {
+              "id": "abc2d69e-014d-4c48-8800-c63d0ef84416",
+              "name": "post_title",
+              "value": "={{ $json.post_title }}",
+              "type": "string"
+            },
+            {
+              "id": "54c74915-12dd-4919-91fa-8d0a98f9206d",
+              "name": "post_type",
+              "value": "={{ $json.post_type }}",
+              "type": "string"
+            },
+            {
+              "id": "d0c57875-f16c-4581-9c05-1880082c5646",
+              "name": "post_type",
+              "value": "={{ $json.post_type }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1200,
+        -1040
+      ],
+      "id": "9b01a42c-12d3-462d-acac-9b44ae4bbeef",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb250ea8-25eb-4517-aefa-e1473850c3bc",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1088,
+        -784
+      ],
+      "id": "76cb460b-2ba9-4490-aead-19a59ecc124f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb250ea8-25eb-4517-aefa-e1473850c3bc",
+              "name": "id",
+              "value": "={{ $json.ID }}",
+              "type": "number"
+            },
+            {
+              "id": "04b5b712-b781-4f40-a989-028cf79366a5",
+              "name": "post_content",
+              "value": "={{ $json.post_content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -784,
+        -1040
+      ],
+      "id": "c4bd5ff8-64b2-4053-8256-11078b62957d",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "id",
+        "joinMode": "keepNonMatches",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -560,
+        -944
+      ],
+      "id": "07d4c4f2-d449-47ad-8bb4-629b7bce8c51",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT *\nFROM wp_posts\nWHERE id IN ({{ $json.id }});",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -336,
+        -944
+      ],
+      "id": "75e067dd-3f2f-46a9-9fb3-95a746e0ac77",
+      "name": "Execute a SQL query1",
+      "credentials": {
+        "mySql": {
+          "id": "4xOQGL6VrSWyP9YZ",
+          "name": "MySQL account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "05bfe109-c113-43c5-9a9d-00c9371070a8",
+              "name": "post_content",
+              "value": "={{ $json.post_content }}",
+              "type": "string"
+            },
+            {
+              "id": "be45a9b7-df57-429e-a024-3dd75f1253d7",
+              "name": "ID",
+              "value": "={{ $json.ID }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -112,
+        -944
+      ],
+      "id": "c1b3f8a5-d51e-42b7-8696-b4cecae42e52",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "18J7JeKBjHUI7aOKpkm1FytJS8kL4iV1WAc9BQIdeJFo",
+          "mode": "list",
+          "cachedResultName": "testsq",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18J7JeKBjHUI7aOKpkm1FytJS8kL4iV1WAc9BQIdeJFo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "الورقة1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18J7JeKBjHUI7aOKpkm1FytJS8kL4iV1WAc9BQIdeJFo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.ID }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        176,
+        -1088
+      ],
+      "id": "a72e69e7-4460-492e-87ee-fd4e612f019d",
+      "name": "Append row in sheet",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "mECpVv88e9yzXODS",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Tables_in_wpdb"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1664,
+        -1040
+      ],
+      "id": "06292540-20f7-4ad4-be50-b51291d8f16e",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM wp_posts\nWHERE post_date < '2018-01-01 00:00:00';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -800,
+        -1248
+      ],
+      "id": "845f6f5c-e4a0-4c63-9532-bc1455de75c1",
+      "name": "Execute a SQL query2",
+      "credentials": {
+        "mySql": {
+          "id": "4xOQGL6VrSWyP9YZ",
+          "name": "MySQL account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Execute a SQL query2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "main": [
+        []
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Select rows from a table1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "00b11c18-8a21-411e-b53e-f5e460bad5ed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "20acf423f1f87e8c12e3f8d6b37434fa3b8f9f000407f8649e611028adfa5216"
+  },
+  "id": "rt0YxjUkaTBgghDy",
+  "tags": []
+}
