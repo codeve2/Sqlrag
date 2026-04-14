@@ -1,4 +1,3 @@
-تمام 👌 هذا إصدار نظيف واحترافي بالكامل بالإنجليزي تقدر تنسخه مباشرة في README:
 ## 📌 Project Overview
 
 This project provides a simple and efficient way to connect your SQL database to a RAG (Retrieval-Augmented Generation) system using n8n — without complex setup.
